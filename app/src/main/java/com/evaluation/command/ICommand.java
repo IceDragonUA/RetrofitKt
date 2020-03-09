@@ -1,4 +1,4 @@
-package com.evaluation.retrofitkt;
+package com.evaluation.command;
 
 
 public interface ICommand<T> {

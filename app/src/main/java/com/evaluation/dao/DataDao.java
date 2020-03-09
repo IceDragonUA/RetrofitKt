@@ -1,17 +1,12 @@
 package com.evaluation.dao;
 
 import com.evaluation.model.asset.Asset;
-import com.evaluation.model.asset.AssetList;
-import com.evaluation.model.asset.AssetType;
-import com.evaluation.model.client.Client;
-import com.evaluation.model.client.ClientList;
-import com.evaluation.model.project.Project;
-import com.evaluation.model.project.ProjectList;
-import com.evaluation.network.IDataLoadingResult;
-import com.evaluation.network.RestApi;
+import com.evaluation.model.search.SearchList;
+import com.evaluation.model.search.SearchResult;
+import com.evaluation.network.IDataResult;
 import com.evaluation.network.RestAdapter;
+import com.evaluation.network.RestApi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,90 +30,37 @@ public class DataDao {
         restApi = RestAdapter.getInstance();
     }
 
-    public void getProjects(final IDataLoadingResult<List<Project>> projectListCallback) {
-        Call<ProjectList> call = restApi.getProjectData();
-        call.enqueue(new Callback<ProjectList>() {
+    public void getSearchList(final IDataResult<List<SearchResult>> searchListCallback) {
+        Call<SearchList> call = restApi.getSearchData();
+        call.enqueue(new Callback<SearchList>() {
             @Override
-            public void onResponse(Call<ProjectList> call, Response<ProjectList> response) {
+            public void onResponse(Call<SearchList> call, Response<SearchList> response) {
                 if (response.isSuccessful()) {
-                    ProjectList projectList = response.body();
-                    projectListCallback.onResult(projectList.getProjectList());
-                } else {
-                    projectListCallback.onFailure(new Exception("Unsuccessful data loading. Failure code [" + response.message() + "]"));
+                    SearchList searchList = response.body();
+                    searchListCallback.onResult(searchList.getSearchList());
                 }
             }
 
             @Override
-            public void onFailure(Call<ProjectList> call, Throwable t) {
-                projectListCallback.onFailure(t);
+            public void onFailure(Call<SearchList> call, Throwable t) {
             }
         });
     }
 
-    public void getClientById(final int clientId, final IDataLoadingResult<Client> clientListCallback) {
-        Call<ClientList> call = restApi.getClientData();
-        call.enqueue(new Callback<ClientList>() {
+    public void getAssetById(final int assetId, final IDataResult<Asset> assetListCallback) {
+        Call<Asset> call = restApi.getAssetById(assetId);
+        call.enqueue(new Callback<Asset>() {
             @Override
-            public void onResponse(Call<ClientList> call, Response<ClientList> response) {
+            public void onResponse(Call<Asset> call, Response<Asset> response) {
                 if (response.isSuccessful()) {
-                    ClientList clientsWrapper = response.body();
-                    Client clientById = findClientById(clientId, clientsWrapper.getClientList());
-                    if (clientById != null) {
-                        clientListCallback.onResult(clientById);
-                    } else {
-                        clientListCallback.onFailure(new Exception("Unsuccessful data loading. Failure code [" + response.message() + "]"));
-                    }
-                } else {
-                    clientListCallback.onFailure(new Exception("Unsuccessful data loading. Failure code [" + response.message() + "]"));
+                    assetListCallback.onResult(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<ClientList> call, Throwable t) {
-                clientListCallback.onFailure(t);
+            public void onFailure(Call<Asset> call, Throwable t) {
             }
         });
-
-    }
-
-    private Client findClientById(int clientId, List<Client> clientList) {
-        for (Client client : clientList) {
-            if (clientId == client.getClientId()) {
-                return client;
-            }
-        }
-        return null;
-    }
-
-    public void getAssetsByProjectId(final int projectId, final AssetType assetType, final IDataLoadingResult<List<Asset>> assetListCallback) {
-        Call<AssetList> call = restApi.getAssetByProject(projectId);
-        call.enqueue(new Callback<AssetList>() {
-            @Override
-            public void onResponse(Call<AssetList> call, Response<AssetList> response) {
-                if (response.isSuccessful()) {
-                    List<Asset> assetsList = response.body().getAssetsList();
-                    List<Asset> filtrated = filterAssetsByAssetType(assetsList, assetType);
-                    assetListCallback.onResult(filtrated);
-                } else {
-                    assetListCallback.onFailure(new Exception("Unsuccessful data loading. Failure code [" + response.message() + "]"));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AssetList> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private List<Asset> filterAssetsByAssetType(List<Asset> sourceAssetsList, AssetType assetType) {
-        List<Asset> res = new ArrayList<>();
-        for (Asset asset : sourceAssetsList) {
-            if (AssetType.fromString(asset.getAssetType()) == assetType) {
-                res.add(asset);
-            }
-        }
-        return res;
     }
 
 }

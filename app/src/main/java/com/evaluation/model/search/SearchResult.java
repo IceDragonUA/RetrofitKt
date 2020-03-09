@@ -1,11 +1,11 @@
-package com.evaluation.model.asset;
+package com.evaluation.model.search;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Asset implements Parcelable {
+public class SearchResult implements Parcelable {
 
     @SerializedName("id")
     private int id;
@@ -13,19 +13,15 @@ public class Asset implements Parcelable {
     @SerializedName("title")
     private String title;
 
-    @SerializedName("overview")
-    private String overview;
-
-    @SerializedName("backdrop_path")
+    @SerializedName("poster_path")
     private String posterPath;
 
-    public Asset() {
+    public SearchResult() {
     }
 
-    private Asset(Parcel parcel) {
+    private SearchResult(Parcel parcel) {
         id = parcel.readInt();
         title = parcel.readString();
-        overview = parcel.readString();
         posterPath = parcel.readString();
     }
 
@@ -35,10 +31,6 @@ public class Asset implements Parcelable {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return overview;
     }
 
     public String getPosterPath() {
@@ -54,20 +46,19 @@ public class Asset implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(title);
-        dest.writeString(overview);
         dest.writeString(posterPath);
     }
 
-    public static final Creator<Asset> CREATOR = new Creator<Asset>() {
+    public static final Creator<SearchResult> CREATOR = new Creator<SearchResult>() {
 
         @Override
-        public Asset createFromParcel(Parcel source) {
-            return new Asset(source);
+        public SearchResult createFromParcel(Parcel source) {
+            return new SearchResult(source);
         }
 
         @Override
-        public Asset[] newArray(int size) {
-            return new Asset[size];
+        public SearchResult[] newArray(int size) {
+            return new SearchResult[size];
         }
     };
 

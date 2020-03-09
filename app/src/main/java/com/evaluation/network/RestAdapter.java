@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestAdapter {
 
-    private static final String BASE_URL = "http://91.250.82.77:8081/";
+    private static final String BASE_URL = "https://api.themoviedb.org/3/";
 
     private static RestApi instance;
 

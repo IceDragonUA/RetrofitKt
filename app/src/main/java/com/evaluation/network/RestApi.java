@@ -1,23 +1,19 @@
 package com.evaluation.network;
 
-import com.evaluation.model.asset.AssetList;
-import com.evaluation.model.client.ClientList;
-import com.evaluation.model.project.ProjectList;
+import com.evaluation.model.asset.Asset;
+import com.evaluation.model.search.SearchList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 public interface RestApi {
 
-    @GET("3ssdemo/prj/json/projects.php")
-    Call<ProjectList> getProjectData();
+    @GET("search/movie?api_key=f7262134aadc3f618b7c4bfac62b4194&language=en-US&query=h&page=1&include_adult=false")
+    Call<SearchList> getSearchData();
 
-    @GET("3ssdemo/prj/json/clients.php")
-    Call<ClientList> getClientData();
-
-    @GET("3ssdemo/prj/json/galleryAssets.php")
-    Call<AssetList> getAssetByProject(@Query("projectId") int projectId);
+    @GET("movie/{assetId}?api_key=f7262134aadc3f618b7c4bfac62b4194&language=en-US")
+    Call<Asset> getAssetById(@Path("assetId") int assetId);
 }
 
 

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.evaluation.model.project.Project;
-import com.evaluation.retrofitkt.ICommand;
+import com.evaluation.model.search.SearchResult;
+import com.evaluation.command.ICommand;
 import com.evaluation.retrofitkt.R;
 
 import java.util.List;
@@ -21,14 +21,16 @@ import butterknife.ButterKnife;
 
 public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.ListAdapterHolder> {
 
+    private static String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w185";
+
     private final Context context;
-    private final List<Project> projectList;
-    private final ICommand<Project> clickCommand;
+    private final List<SearchResult> searchResultList;
+    private final ICommand<SearchResult> clickCommand;
 
 
-    public CustomListAdapter(Context context, List<Project> projectList, ICommand<Project> clickCommand) {
+    public CustomListAdapter(Context context, List<SearchResult> searchResultList, ICommand<SearchResult> clickCommand) {
         this.context = context;
-        this.projectList = projectList;
+        this.searchResultList = searchResultList;
         this.clickCommand = clickCommand;
     }
 
@@ -40,17 +42,17 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Li
 
     @Override
     public void onBindViewHolder(ListAdapterHolder projectListAdapterHolder, int position) {
-        Project projectItem = getItem(position);
-        projectListAdapterHolder.bind(projectItem, clickCommand);
+        SearchResult searchResultItem = getItem(position);
+        projectListAdapterHolder.bind(searchResultItem, clickCommand);
     }
 
-    public Project getItem(int position) {
-        return projectList.get(position);
+    public SearchResult getItem(int position) {
+        return searchResultList.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return (null != projectList ? projectList.size() : 0);
+        return (null != searchResultList ? searchResultList.size() : 0);
     }
 
     static class ListAdapterHolder extends RecyclerView.ViewHolder {
@@ -69,15 +71,15 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Li
             ButterKnife.bind(this, view);
         }
 
-        public void bind(final Project selectedProject, final ICommand<Project> projectClickCommand) {
+        public void bind(final SearchResult selectedSearchResult, final ICommand<SearchResult> projectClickCommand) {
 
-            titleView.setText(selectedProject.getProjectName());
+            titleView.setText(selectedSearchResult.getTitle());
 
             Glide.with(mContext)
-                    .load(selectedProject.getProjectImage().getProjectImageUrl())
+                    .load(BASE_IMAGE_URL + selectedSearchResult.getPosterPath())
                     .into(thumbnailView);
 
-            itemView.setOnClickListener(v -> projectClickCommand.execute(selectedProject));
+            itemView.setOnClickListener(v -> projectClickCommand.execute(selectedSearchResult));
         }
     }
 }
