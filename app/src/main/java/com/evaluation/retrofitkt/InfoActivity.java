@@ -9,12 +9,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.evaluation.dao.DataDao;
 import com.evaluation.model.asset.Asset;
 import com.evaluation.model.search.SearchResult;
+import com.evaluation.network.RestAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class InfoActivity extends AppCompatActivity {
 
@@ -32,12 +36,28 @@ public class InfoActivity extends AppCompatActivity {
 
     private Asset selectedAsset;
 
-    public static void launchActivity(Context activityContext, SearchResult selectedSearchResult) {
-        DataDao.getInstance().getAssetById(selectedSearchResult.getId(), result -> {
-            Intent launchingIntent = new Intent(activityContext, InfoActivity.class);
-            launchingIntent.putExtra(SELECTED_PROJECT_KEY, result);
-            activityContext.startActivity(launchingIntent);
-        });
+    public static void launchActivity(Context activityContext, SearchResult selectedSearchResult, RestAdapter restAdapter) {
+        restAdapter.getRestApiService().getAssetById(selectedSearchResult.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Asset>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Asset asset) {
+                        Intent launchingIntent = new Intent(activityContext, InfoActivity.class);
+                        launchingIntent.putExtra(SELECTED_PROJECT_KEY, asset);
+                        activityContext.startActivity(launchingIntent);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
     }
 
     @Override

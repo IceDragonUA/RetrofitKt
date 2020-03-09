@@ -12,11 +12,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestAdapter {
 
-    private static final String BASE_URL = "https://api.themoviedb.org/3/";
+    private final String BASE_URL = "https://api.themoviedb.org/3/";
 
-    private static RestApi instance;
+    private RestApi instance;
 
-    public static RestApi getInstance() {
+    public RestApi getRestApiService() {
         if (instance == null) {
             instance = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

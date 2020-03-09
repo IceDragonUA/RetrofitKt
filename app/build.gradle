@@ -50,6 +50,14 @@ dependencies {
     implementation dep.butterknife
     annotationProcessor dep.butterknifeCompiler
 
+    // Dagger
+    implementation dep.dagger
+    annotationProcessor dep.daggerCompiler
+
+    // RxAndroid
+    implementation dep.rxAndroid
+    implementation dep.rxJava
+
     // Retrofit
     implementation dep.retrofit
     implementation dep.retrofitConvGson
