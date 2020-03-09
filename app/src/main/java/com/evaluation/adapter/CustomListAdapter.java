@@ -14,6 +14,8 @@ import com.evaluation.model.search.SearchResult;
 import com.evaluation.command.ICommand;
 import com.evaluation.retrofitkt.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,6 +36,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Li
         this.clickCommand = clickCommand;
     }
 
+    @NotNull
     @Override
     public ListAdapterHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
         View rootView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item, viewGroup, false);
