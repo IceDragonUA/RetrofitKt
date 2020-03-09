@@ -1,0 +1,17 @@
+// Centralized place for defining versions for APIs and dependencies
+ext {
+
+    // Dependencies
+    dep = [
+            androidGradlePlugin    : 'com.android.tools.build:gradle:3.6.1',
+            kotlinGradlePlugin     : 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.70',
+
+            kotlinStd : "org.jetbrains.kotlin:kotlin-stdlib:1.3.70",
+            anko : "org.jetbrains.anko:anko-common:0.10.8",
+
+            appCompat : 'androidx.appcompat:appcompat:1.1.0',
+            recyclerView : 'androidx.recyclerview:recyclerview:1.1.0',
+            ktxCore : 'androidx.core:core-ktx:1.2.0',
+            constraintLayout : 'androidx.constraintlayout:constraintlayout:1.1.3',
+    ]
+}
