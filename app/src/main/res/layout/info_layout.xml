@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
@@ -13,14 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:contentDescription="@string/logo"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/title"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/text_padding"
         android:gravity="center"
@@ -36,7 +36,6 @@
         android:layout_marginBottom="@dimen/text_padding"
         android:paddingLeft="@dimen/text_padding"
         android:paddingRight="@dimen/text_padding"
-        android:text="@string/description"
         android:textAlignment="gravity"
         android:textColor="@android:color/black"
         android:textSize="@dimen/description_size" />

@@ -1,4 +1,4 @@
-package com.evaluation.dagger;
+package com.evaluation.dagger.data;
 
 import com.evaluation.network.RestAdapter;
 
@@ -12,14 +12,14 @@ import dagger.Provides;
  * @since 09.03.2020
  */
 @Module
-public class RestAdapterModule {
+class RestAdapterModule {
 
     private static RestAdapterModule instance;
 
     RestAdapterModule() {
     }
 
-    public static RestAdapterModule getInstance() {
+    static RestAdapterModule getInstance() {
         if (instance == null) {
             instance = new RestAdapterModule();
         }
@@ -28,7 +28,7 @@ public class RestAdapterModule {
 
     @Provides
     @Singleton
-    RestAdapter provideControlCenterRetrofitAdapter() {
+    RestAdapter provideRestAdapter() {
         return new RestAdapter();
     }
 

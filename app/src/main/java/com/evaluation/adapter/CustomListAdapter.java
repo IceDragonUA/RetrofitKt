@@ -41,12 +41,11 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Li
     }
 
     @Override
-    public void onBindViewHolder(ListAdapterHolder projectListAdapterHolder, int position) {
-        SearchResult searchResultItem = getItem(position);
-        projectListAdapterHolder.bind(searchResultItem, clickCommand);
+    public void onBindViewHolder(ListAdapterHolder searchListAdapterHolder, int position) {
+        searchListAdapterHolder.bind(getItem(position), clickCommand);
     }
 
-    public SearchResult getItem(int position) {
+    private SearchResult getItem(int position) {
         return searchResultList.get(position);
     }
 
@@ -65,13 +64,13 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Li
 
         private Context mContext;
 
-        public ListAdapterHolder(Context context, View view) {
+        ListAdapterHolder(Context context, View view) {
             super(view);
             mContext = context;
             ButterKnife.bind(this, view);
         }
 
-        public void bind(final SearchResult selectedSearchResult, final ICommand<SearchResult> projectClickCommand) {
+        void bind(final SearchResult selectedSearchResult, final ICommand<SearchResult> assetClickCommand) {
 
             titleView.setText(selectedSearchResult.getTitle());
 
@@ -79,7 +78,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Li
                     .load(BASE_IMAGE_URL + selectedSearchResult.getPosterPath())
                     .into(thumbnailView);
 
-            itemView.setOnClickListener(v -> projectClickCommand.execute(selectedSearchResult));
+            itemView.setOnClickListener(v -> assetClickCommand.execute(selectedSearchResult));
         }
     }
 }

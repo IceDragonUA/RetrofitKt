@@ -3,30 +3,19 @@ package com.evaluation.retrofitkt;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.evaluation.adapter.CustomListAdapter;
-import com.evaluation.dagger.DataComponent;
-import com.evaluation.model.search.SearchList;
-import com.evaluation.network.RestAdapter;
+import com.evaluation.dagger.data.DataComponent;
+import com.evaluation.fragment.BaseFragment;
+import com.evaluation.navigation.Navigator;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
     @Inject
-    RestAdapter restAdapter;
-
-    @BindView(R.id.recycler_view)
-    RecyclerView recycleView;
+    Navigator mNavigator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,40 +26,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DataComponent.Injector.getComponent().inject(this);
+
         ButterKnife.bind(this);
 
-        recycleView.setLayoutManager(new LinearLayoutManager(this));
-
-        loadAssetList();
+        mNavigator.init(this);
+        mNavigator.showMainFragment();
     }
 
-    private void loadAssetList() {
-        restAdapter.getRestApiService().getSearchData()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<SearchList>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
+    @Override
+    public void onBackPressed() {
+        BaseFragment currentFragment = mNavigator.getContentFragment();
 
-                    @Override
-                    public void onSuccess(SearchList searchList) {
-                        CustomListAdapter adapter = new CustomListAdapter(
-                                MainActivity.this,
-                                searchList.getSearchList(),
-                                selectedProject -> InfoActivity.launchActivity(
-                                        MainActivity.this,
-                                        selectedProject,
-                                        restAdapter
-                                )
-                        );
-                        recycleView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-                });
+        // Dispatch back event to the current fragment.
+        if (currentFragment != null && currentFragment.onBackPressed()) {
+            return;
+        }
     }
 }

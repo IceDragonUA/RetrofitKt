@@ -1,12 +1,3 @@
 <resources>
     <string name="app_name">RetrofitKt</string>
-
-    <string name="logo">Logo</string>
-
-    <string name="title">Title</string>
-    <string name="description">Description</string>
-    <string name="technologies">Technologies</string>
-    <string name="supportedScreens">Supported screens</string>
-    <string name="solutionTypes">Solution types</string>
-    <string name="clientName">Client name</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.evaluation.dagger;
+package com.evaluation.dagger.data;
 
 import javax.inject.Singleton;
 
@@ -10,7 +10,8 @@ import dagger.Component;
  */
 @Singleton
 @Component(modules = {
-        RestAdapterModule.class
+        RestAdapterModule.class,
+        NavigatorModule.class
 })
 public interface DataComponent extends DataGraph {
 
@@ -24,6 +25,7 @@ public interface DataComponent extends DataGraph {
         public static void init() {
             sComponent = DaggerDataComponent.builder()
                     .restAdapterModule(RestAdapterModule.getInstance())
+                    .navigatorModule(NavigatorModule.getInstance())
                     .build();
         }
 
@@ -31,5 +33,4 @@ public interface DataComponent extends DataGraph {
             return sComponent;
         }
     }
-
 }
