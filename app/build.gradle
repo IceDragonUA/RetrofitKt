@@ -41,6 +41,11 @@ dependencies {
     // RecyclerView
     implementation dep.recyclerView
 
+    // Glide
+    implementation dep.glide
+    implementation dep.glideAnnotations
+    annotationProcessor dep.glideCompiler
+
     // ButterKnife
     implementation dep.butterknife
     annotationProcessor dep.butterknifeCompiler
@@ -48,5 +53,10 @@ dependencies {
     // Retrofit
     implementation dep.retrofit
     implementation dep.retrofitConvGson
+    implementation dep.okhttpLogging
     implementation dep.retrofitAdaptRx
+
+    // Stetho
+    implementation dep.facebookStetho
+    implementation dep.facebookStethoOkhttp
 }
