@@ -9,7 +9,7 @@ import com.evaluation.retrofitkt.MainActivity
  * @since 09.03.2020
  */
 internal interface DataGraph {
-    fun inject(mainActivity: MainActivity?)
-    fun inject(mainFragment: MainFragment?)
-    fun inject(mainFragment: DetailFragment?)
+    fun inject(mainActivity: MainActivity)
+    fun inject(mainFragment: MainFragment)
+    fun inject(mainFragment: DetailFragment)
 }

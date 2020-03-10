@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
  * @since 09.03.2020
  */
 public class MainFragment extends BaseFragment {
-    public static final String TAG = MainFragment.class.getCanonicalName();
+    public final String TAG = MainFragment.class.getCanonicalName();
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -64,14 +64,9 @@ public class MainFragment extends BaseFragment {
             mRootView = inflater.inflate(R.layout.main_layout, container, false);
             ButterKnife.bind(this, mRootView);
             recycleView.setLayoutManager(new LinearLayoutManager(mActivity));
+            loadAssetList();
         }
         return mRootView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loadAssetList();
     }
 
     @Override
@@ -93,7 +88,7 @@ public class MainFragment extends BaseFragment {
                     public void onSuccess(SearchList searchList) {
                         CustomListAdapter adapter = new CustomListAdapter(
                                 mActivity,
-                                searchList.getSearchList(),
+                                searchList.getSearchResultList(),
                                 selectedProject -> mNavigator.showDetailFragment(selectedProject.getId())
                         );
                         recycleView.setAdapter(adapter);

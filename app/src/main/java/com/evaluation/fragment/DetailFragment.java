@@ -30,7 +30,7 @@ import io.reactivex.schedulers.Schedulers;
  * @since 09.03.2020
  */
 public class DetailFragment extends BaseFragment {
-    public static final String TAG = DetailFragment.class.getCanonicalName();
+    public final String TAG = DetailFragment.class.getCanonicalName();
 
     public static final int NO_SELECTION = -1;
 
@@ -77,14 +77,9 @@ public class DetailFragment extends BaseFragment {
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.info_layout, container, false);
             ButterKnife.bind(this, mRootView);
+            loadAssetDetail(assetId);
         }
         return mRootView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loadAssetDetail(assetId);
     }
 
     @Override
@@ -110,7 +105,7 @@ public class DetailFragment extends BaseFragment {
                                 .into(logoView);
 
                         titleView.setText(asset.getTitle());
-                        descriptionView.setText(asset.getDescription());
+                        descriptionView.setText(asset.getOverview());
                     }
 
                     @Override
@@ -121,9 +116,6 @@ public class DetailFragment extends BaseFragment {
     }
 
     public boolean onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        }
-        return true;
+        return false;
     }
 }

@@ -10,6 +10,6 @@ public class BaseFragment extends Fragment {
     public final String TAG = this.getClass().getCanonicalName();
 
     public boolean onBackPressed() {
-        return false;
+        return true;
     }
 }

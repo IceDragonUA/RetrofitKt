@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.evaluation.model.search.SearchResult;
 import com.evaluation.command.ICommand;
+import com.evaluation.model.search.SearchResult;
 import com.evaluation.retrofitkt.R;
 
 import org.jetbrains.annotations.NotNull;

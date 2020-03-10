@@ -41,5 +41,6 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment != null && currentFragment.onBackPressed()) {
             return;
         }
+        super.onBackPressed();
     }
 }
