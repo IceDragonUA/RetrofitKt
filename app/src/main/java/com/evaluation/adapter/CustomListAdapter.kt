@@ -33,7 +33,7 @@ class CustomListAdapter(private val context: Context, private val searchResultLi
 
     override fun getItemCount(): Int = searchResultList.size
 
-    class ListAdapterHolder(private val mContext: Context, view: View?) : RecyclerView.ViewHolder(view!!) {
+    class ListAdapterHolder(private val mContext: Context, view: View) : RecyclerView.ViewHolder(view) {
 
         @BindView(R.id.title)
         lateinit var titleView: TextView
@@ -42,7 +42,7 @@ class CustomListAdapter(private val context: Context, private val searchResultLi
         lateinit var thumbnailView: ImageView
 
         init {
-            ButterKnife.bind(this, view!!)
+            ButterKnife.bind(this, view)
         }
 
         fun bind(selectedSearchResult: SearchResult, assetClickCommand: ICommand<SearchResult>) {

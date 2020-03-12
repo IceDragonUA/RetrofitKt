@@ -39,9 +39,13 @@ class MainFragment : BaseFragment() {
     @BindView(R.id.recycler_view)
     lateinit var recycleView: RecyclerView
 
+    companion object {
+        fun newInstance(): MainFragment = MainFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataComponent.Injector.component!!.inject(this)
+        DataComponent.Injector.component.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,7 +61,7 @@ class MainFragment : BaseFragment() {
 
     @SuppressLint("CheckResult")
     private fun loadAssetList() {
-        restAdapter.restApiService!!.getSearchData()
+        restAdapter.restApiService.getSearchData()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -76,9 +80,5 @@ class MainFragment : BaseFragment() {
                     recycleView.adapter = adapter
                 },
                 {})
-    }
-
-    companion object {
-        fun newInstance(): MainFragment = MainFragment()
     }
 }

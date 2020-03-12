@@ -12,7 +12,7 @@ import javax.inject.Singleton
 interface DataComponent : DataGraph {
 
     object Injector {
-        var component: DataComponent? = null
+        lateinit var component: DataComponent
             private set
 
         fun init() {

@@ -13,21 +13,20 @@ import javax.inject.Inject
 class RestAdapter @Inject constructor() {
 
     private val BASE_URL = "https://api.themoviedb.org/3/"
-    private var instance: RestApi? = null
+    private var instance: RestApi
 
-    val restApiService: RestApi?
-        get() {
-            if (instance == null) {
-                instance = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(provideGson()))
-                    .addCallAdapterFactory(provideRxJava())
-                    .client(provideOkHttpClient())
-                    .build()
-                    .create(RestApi::class.java)
-            }
-            return instance
-        }
+    init {
+        instance = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create(provideGson()))
+            .addCallAdapterFactory(provideRxJava())
+            .client(provideOkHttpClient())
+            .build()
+            .create(RestApi::class.java)
+    }
+
+    val restApiService: RestApi
+        get() = instance
 
     private fun provideRxJava() = RxJava2CallAdapterFactory.create()
 

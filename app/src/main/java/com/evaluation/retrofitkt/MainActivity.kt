@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        DataComponent.Injector.component!!.inject(this)
+        DataComponent.Injector.component.inject(this)
 
         mNavigator.init(this)
         mNavigator.showMainFragment()

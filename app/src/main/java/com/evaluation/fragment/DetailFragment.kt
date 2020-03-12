@@ -41,9 +41,24 @@ class DetailFragment : BaseFragment() {
     @BindView(R.id.description)
     lateinit var descriptionView: TextView
 
+    companion object {
+
+        const val NO_SELECTION = -1
+        private const val EXTRA_ASSET_ID = "EXTRA_ASSET_ID"
+        private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w780"
+
+        fun newInstance(assetId: Int): DetailFragment {
+            val args = Bundle()
+            args.putInt(EXTRA_ASSET_ID, assetId)
+            val fragment = DetailFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataComponent.Injector.component!!.inject(this)
+        DataComponent.Injector.component.inject(this)
         assetId = arguments?.getInt(EXTRA_ASSET_ID, NO_SELECTION) ?: NO_SELECTION
     }
 
@@ -59,7 +74,7 @@ class DetailFragment : BaseFragment() {
 
     @SuppressLint("CheckResult")
     private fun loadAssetDetail(assetId: Int) {
-        restAdapter.restApiService!!.getAssetById(assetId)
+        restAdapter.restApiService.getAssetById(assetId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ asset ->
@@ -77,20 +92,5 @@ class DetailFragment : BaseFragment() {
 
     override fun onBackPressed(): Boolean {
         return false
-    }
-
-    companion object {
-
-        const val NO_SELECTION = -1
-        private const val EXTRA_ASSET_ID = "EXTRA_ASSET_ID"
-        private const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w780"
-
-        fun newInstance(assetId: Int): DetailFragment {
-            val args = Bundle()
-            args.putInt(EXTRA_ASSET_ID, assetId)
-            val fragment = DetailFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }
