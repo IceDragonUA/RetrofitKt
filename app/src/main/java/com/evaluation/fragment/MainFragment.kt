@@ -1,5 +1,6 @@
 package com.evaluation.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,7 @@ class MainFragment : BaseFragment() {
         return mRootView
     }
 
+    @SuppressLint("CheckResult")
     private fun loadAssetList() {
         restAdapter.restApiService!!.getSearchData()
             .subscribeOn(Schedulers.io())
@@ -68,8 +70,8 @@ class MainFragment : BaseFragment() {
                         activity,
                         searchList.searchResultList,
                         object : ICommand<SearchResult> {
-                            override fun execute(searchResult: SearchResult) {
-                                mNavigator.showDetailFragment(searchResult.id)
+                            override fun execute(param: SearchResult) {
+                                mNavigator.showDetailFragment(param.id)
                             }
                         }
                     )
@@ -77,7 +79,6 @@ class MainFragment : BaseFragment() {
                 },
                 {})
     }
-
 
     companion object {
         fun newInstance(): MainFragment = MainFragment()

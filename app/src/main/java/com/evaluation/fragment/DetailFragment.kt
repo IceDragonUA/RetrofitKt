@@ -1,5 +1,6 @@
 package com.evaluation.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,7 @@ class DetailFragment : BaseFragment() {
         return mRootView
     }
 
+    @SuppressLint("CheckResult")
     private fun loadAssetDetail(assetId: Int) {
         restAdapter.restApiService!!.getAssetById(assetId)
             .subscribeOn(Schedulers.io())
