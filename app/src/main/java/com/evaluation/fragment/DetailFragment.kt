@@ -47,11 +47,7 @@ class DetailFragment : BaseFragment() {
         assetId = arguments?.getInt(EXTRA_ASSET_ID, NO_SELECTION) ?: NO_SELECTION
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (mRootView == null) {
             val view = inflater.inflate(R.layout.info_layout, container, false)
             ButterKnife.bind(this, view)
