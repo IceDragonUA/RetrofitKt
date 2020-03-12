@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         // Dispatch back event to the current fragment.
         if (currentFragment != null && currentFragment.onBackPressed()) {
-            return
+            super.onBackPressed()
         }
         super.onBackPressed()
     }
