@@ -10,7 +10,5 @@ open class BaseFragment : Fragment() {
 
     open val TAG = this.javaClass.canonicalName
 
-    open fun onBackPressed(): Boolean {
-        return true
-    }
+    open fun onBackPressed(): Boolean = true
 }

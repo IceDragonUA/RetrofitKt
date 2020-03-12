@@ -21,7 +21,7 @@ class RestAdapter @Inject constructor() {
                 instance = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(provideGson()))
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addCallAdapterFactory(provideRxJava())
                     .client(provideOkHttpClient())
                     .build()
                     .create(RestApi::class.java)
@@ -29,18 +29,16 @@ class RestAdapter @Inject constructor() {
             return instance
         }
 
-    companion object {
-        private fun provideGson(): Gson {
-            return GsonBuilder().create()
-        }
+    private fun provideRxJava() = RxJava2CallAdapterFactory.create()
 
-        private fun provideOkHttpClient(): OkHttpClient {
-            val intLogging = HttpLoggingInterceptor()
-            intLogging.level = HttpLoggingInterceptor.Level.BODY
-            return OkHttpClient().newBuilder()
-                .addInterceptor(intLogging)
-                .addNetworkInterceptor(StethoInterceptor())
-                .build()
-        }
+    private fun provideGson(): Gson = GsonBuilder().create()
+
+    private fun provideOkHttpClient(): OkHttpClient {
+        val intLogging = HttpLoggingInterceptor()
+        intLogging.level = HttpLoggingInterceptor.Level.BODY
+        return OkHttpClient().newBuilder()
+            .addInterceptor(intLogging)
+            .addNetworkInterceptor(StethoInterceptor())
+            .build()
     }
 }

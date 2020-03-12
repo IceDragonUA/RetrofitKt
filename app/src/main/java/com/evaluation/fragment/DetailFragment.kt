@@ -26,6 +26,8 @@ class DetailFragment : BaseFragment() {
 
     private var mRootView: View? = null
 
+    private var assetId: Int = 0
+
     @Inject
     lateinit var restAdapter: RestAdapter
 
@@ -37,8 +39,6 @@ class DetailFragment : BaseFragment() {
 
     @BindView(R.id.description)
     lateinit var descriptionView: TextView
-
-    private var assetId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +65,11 @@ class DetailFragment : BaseFragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ asset ->
-//                Glide.with(activity!!)
-//                    .load(BASE_IMAGE_URL + asset.posterPath)
-//                    .into(logoView)
+                activity?.let {
+                    Glide.with(it)
+                        .load(BASE_IMAGE_URL + asset.posterPath)
+                        .into(logoView)
+                }
                 titleView.text = asset.title
                 descriptionView.text = asset.overview
             },

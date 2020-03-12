@@ -38,5 +38,5 @@ class Navigator @Inject constructor() {
     }
 
     val contentFragment: BaseFragment?
-        get() = mActivity.fragmentManager.findFragmentById(R.id.fragment) as BaseFragment
+        get() = mActivity.supportFragmentManager.findFragmentById(R.id.fragment) as BaseFragment
 }

@@ -68,8 +68,8 @@ class MainFragment : BaseFragment() {
                         activity,
                         searchList.searchResultList,
                         object : ICommand<SearchResult> {
-                            override fun execute(param: SearchResult) {
-                                mNavigator.showDetailFragment(id)
+                            override fun execute(searchResult: SearchResult) {
+                                mNavigator.showDetailFragment(searchResult.id)
                             }
                         }
                     )
@@ -80,8 +80,6 @@ class MainFragment : BaseFragment() {
 
 
     companion object {
-        fun newInstance(): MainFragment {
-            return MainFragment()
-        }
+        fun newInstance(): MainFragment = MainFragment()
     }
 }
