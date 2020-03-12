@@ -66,15 +66,17 @@ class MainFragment : BaseFragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { searchList ->
-                    val adapter = CustomListAdapter(
-                        activity,
-                        searchList.searchResultList,
-                        object : ICommand<SearchResult> {
-                            override fun execute(param: SearchResult) {
-                                mNavigator.showDetailFragment(param.id)
+                    val adapter = context?.let {
+                        CustomListAdapter(
+                            it,
+                            searchList.searchResultList,
+                            object : ICommand<SearchResult> {
+                                override fun execute(param: SearchResult) {
+                                    mNavigator.showDetailFragment(param.id)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                     recycleView.adapter = adapter
                 },
                 {})
